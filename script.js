@@ -6,11 +6,38 @@ let newAuthor = document.querySelector("#author");
 let newPages = document.querySelector("#pages");
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+// function Book(title, author, pages, read) {
+//   this.title = title;
+//   this.author = author;
+//   this.pages = pages;
+//   this.read = read;
+// }
+
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+
+  addBookToLibrary() {
+    myLibrary.push(this);
+    updateTable();
+  }
+
+  // deleteBookFromLibrary(index) {
+  //   myLibrary.splice(index, 1);
+  //   updateTable();
+  // }
+
+  get readValue() {
+    return this.read;
+  }
+
+  set readValue(readValue) {
+    this.read = readValue;
+  }
 }
 
 function createBook() {
@@ -19,9 +46,11 @@ function createBook() {
   let pagesValue = newPages.value;
   let readValue = getRead();
 
-  newBook = new Book(titleValue, authorValue, pagesValue, readValue);
+  let newBook = new Book(titleValue, authorValue, pagesValue, readValue);
+
   if (!validateBook(newBook)) return;
-  addBookToLibrary(newBook);
+  console.log(newBook);
+  newBook.addBookToLibrary();
   updateTable();
   resetForm();
 }
@@ -34,10 +63,10 @@ function validateBook(book) {
   return true;
 }
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-  updateTable();
-}
+// function addBookToLibrary(book) {
+//   myLibrary.push(book);
+//   updateTable();
+// }
 
 function deleteBookFromLibrary(index) {
   myLibrary.splice(index, 1);
@@ -110,5 +139,6 @@ function init() {
 }
 
 book1 = new Book("The Hobbit", "J.R.R Tolkien", 192, "Read");
-addBookToLibrary(book1);
+book1.addBookToLibrary();
+console.log(myLibrary[0]);
 window.onload = init();
